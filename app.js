@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 
-// Servir los archivos estáticos desde la carpeta 'public'
+// Servir archivos estáticos desde la carpeta 'public'
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Ruta principal
@@ -13,6 +13,12 @@ app.get('/', (req, res) => {
 // Ruta para los resultados
 app.get('/results', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'results.html'));
+});
+
+// Manejo de errores
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Algo salió mal!');
 });
 
 // Puerto de escucha

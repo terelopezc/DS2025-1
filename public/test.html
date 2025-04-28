@@ -102,14 +102,39 @@
     function enviarFormulario(e) {
       e.preventDefault();
       const formData = new FormData(document.getElementById("testForm"));
-      let total = 0;
+
+      let contador = { A: 0, B: 0, C: 0 };
+
       for (let value of formData.values()) {
-        total += parseInt(value, 10);
+        if (value === '1') {
+          contador.A++;
+        } else if (value === '2') {
+          contador.B++;
+        } else if (value === '3') {
+          contador.C++;
+        }
       }
-      localStorage.setItem("resultadoTeste", total);
+
+      // Determinar la mayoría
+      let resultado = '';
+      if (contador.A > contador.B && contador.A > contador.C) {
+        resultado = 'Maioria de respostas A';
+      } else if (contador.B > contador.A && contador.B > contador.C) {
+        resultado = 'Maioria de respostas B';
+      } else if (contador.C > contador.A && contador.C > contador.B) {
+        resultado = 'Maioria de respostas C';
+      } else {
+        resultado = 'Empate entre duas ou mais opções.';
+      }
+
+      // Guardar resultado en localStorage para usarlo en results.html
+      localStorage.setItem("resultadoTeste", resultado);
+
+      // Abrir resultados
       window.open("results.html", "_blank");
       return false;
     }
+
   </script>
 </body>
 </html>

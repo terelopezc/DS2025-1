@@ -59,30 +59,29 @@
 
   <h1>Parabéns por completar o teste!</h1>
   <div class="resultado" id="interpretacao">
-    <p><strong>Pontuação total:</strong> 0 / 18</p>
-    <p>Estamos processando seus resultados...</p>
+    <p><strong>Resultado:</strong> Estamos processando seus resultados...</p>
   </div>
 
   <button class="btn" onclick="window.close()">Fechar</button>
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script>
-    const pontuacao = parseInt(localStorage.getItem("resultadoTeste"), 10);
+    const resultado = localStorage.getItem("resultadoTeste");
 
     let texto = "";
 
-    if (pontuacao >= 16) {
-      texto = "Excelente! Você demonstra grande capacidade de reconhecer e gerenciar suas emoções.";
-    } else if (pontuacao >= 12) {
-      texto = "Muito bom! Sua inteligência emocional é boa, mas ainda pode ser aprimorada em algumas áreas.";
-    } else if (pontuacao >= 8) {
-      texto = "Há espaço para desenvolvimento. Reflita sobre suas respostas e busque fortalecer sua inteligência emocional.";
+    if (resultado === "Maioria de respostas A") {
+      texto = "Sua inteligência emocional pode precisar de desenvolvimento. Considere trabalhar nas áreas identificadas.";
+    } else if (resultado === "Maioria de respostas B") {
+      texto = "Você demonstra uma boa inteligência emocional e é capaz de usar essas habilidades em várias situações.";
+    } else if (resultado === "Maioria de respostas C") {
+      texto = "Você tende a evitar situações emocionais, o que pode limitar suas interações e desenvolvimento emocional.";
     } else {
-      texto = "Atenção! Trabalhar a percepção e gestão das emoções pode trazer grandes benefícios para sua vida pessoal e profissional.";
+      texto = "Parece que houve um empate ou uma distribuição equilibrada entre as respostas A, B e C. Isso indica que você pode ter uma combinação de características emocionais. Refletir sobre essas diferentes reações pode ajudar no seu desenvolvimento pessoal.";
     }
 
     document.getElementById("interpretacao").innerHTML = `
-      <p><strong>Pontuação total:</strong> ${pontuacao} / 18</p>
+      <p><strong>Resultado:</strong> ${resultado}</p>
       <p>${texto}</p>
     `;
 
