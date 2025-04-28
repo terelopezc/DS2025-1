@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Teste - Inteligência Emocional</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
+    h2 {
+      margin-top: 2rem;
+    }
+    .question {
+      margin: 1rem 0;
+      padding: 1rem;
+      background: #f0f0f0;
+      border-radius: 8px;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+      margin-top: 0.5rem;
+    }
+    .options label {
+      margin-bottom: 8px;
+    }
+    button {
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      background-color: #2d89ef;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #1b5bbf;
+    }
+  </style>
+</head>
+<body>
+  <h1>Teste de Autoavaliação: Inteligência Emocional</h1>
+
+  <form id="testForm" onsubmit="return enviarFormulario(event)">
+    <div id="perguntas"></div>
+    <button type="submit">Enviar</button>
+  </form>
+
+  <script>
+    const perguntas = [
+      {
+        texto: "Você percebe que está se sentindo ansioso antes de uma apresentação importante. O que você faz?",
+        opcoes: ["Ignoro a ansiedade e sigo em frente.", "Reconheço a ansiedade e pratico técnicas de respiração para me acalmar.", "Decido não fazer a apresentação."]
+      },
+      {
+        texto: "Durante uma discussão, alguém toca em um ponto que te irrita. Como você reage?",
+        opcoes: ["Respondo de forma agressiva.", "Faço uma pausa antes de responder, para não reagir impulsivamente.", "Saio da conversa."]
+      },
+      {
+        texto: "Você está trabalhando em um projeto que não está avançando como esperado. O que você faz?",
+        opcoes: ["Desanimo e deixo o projeto de lado.", "Busco novas abordagens e inspiro-me em exemplos anteriores de sucesso.", "Culpo os outros pela situação."]
+      },
+      {
+        texto: "Um amigo compartilha que está passando por um momento difícil. Como você responde?",
+        opcoes: ["Fico sem saber o que dizer e mudo de assunto.", "Ouço atentamente e ofereço meu apoio.", "Digo para ele não se preocupar e que tudo vai melhorar."]
+      },
+      {
+        texto: "Você é convidado a participar de um trabalho em equipe. Como você se comporta?",
+        opcoes: ["Prefiro trabalhar sozinho, pois desconfio dos outros.", "Colaboro e busco opiniões dos outros para melhorar o projeto.", "Deixo que outros tomem as decisões."]
+      },
+      {
+        texto: "Uma situação inesperada faz você sentir frustração. Como você lida com isso?",
+        opcoes: ["Deixo a frustração me dominar e reclamo.", "Reconheço a frustração, mas busco entender a causa.", "Ignoro a frustração e sigo em frente."]
+      }
+    ];
+
+    function renderQuestions() {
+      const container = document.getElementById("perguntas");
+      perguntas.forEach((pergunta, index) => {
+        const div = document.createElement("div");
+        div.className = "question";
+        div.innerHTML = `
+          <p>${pergunta.texto}</p>
+          <div class="options">
+            ${pergunta.opcoes.map((opcao, i) => `
+              <label>
+                <input type="radio" name="q${index + 1}" value="${i+1}" required> ${opcao}
+              </label>
+            `).join('')}
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    renderQuestions();
+
+    function enviarFormulario(e) {
+      e.preventDefault();
+      const formData = new FormData(document.getElementById("testForm"));
+      let total = 0;
+      for (let value of formData.values()) {
+        total += parseInt(value, 10);
+      }
+      localStorage.setItem("resultadoTeste", total);
+      window.open("results.html", "_blank");
+      return false;
+    }
+  </script>
+</body>
+</html>

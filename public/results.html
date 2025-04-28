@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Resultados do Teste</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+      background-color: #fdfdfd;
+      overflow: hidden;
+    }
+    h1 {
+      text-align: center;
+      color: #2d89ef;
+      margin-bottom: 1rem;
+    }
+    .resultado {
+      padding: 2rem;
+      background: #ffecb3;
+      border-left: 8px solid #2d89ef;
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+      text-align: center;
+    }
+    .btn {
+      display: block;
+      width: 200px;
+      margin: 2rem auto;
+      padding: 10px;
+      font-size: 1.2rem;
+      background-color: #2d89ef;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn:hover {
+      background-color: #1b5bbf;
+    }
+    #confetti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="confetti"></div>
+
+  <h1>Parabéns por completar o teste!</h1>
+  <div class="resultado" id="interpretacao">
+    <p><strong>Pontuação total:</strong> 0 / 18</p>
+    <p>Estamos processando seus resultados...</p>
+  </div>
+
+  <button class="btn" onclick="window.close()">Fechar</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script>
+    const pontuacao = parseInt(localStorage.getItem("resultadoTeste"), 10);
+
+    let texto = "";
+
+    if (pontuacao >= 16) {
+      texto = "Excelente! Você demonstra grande capacidade de reconhecer e gerenciar suas emoções.";
+    } else if (pontuacao >= 12) {
+      texto = "Muito bom! Sua inteligência emocional é boa, mas ainda pode ser aprimorada em algumas áreas.";
+    } else if (pontuacao >= 8) {
+      texto = "Há espaço para desenvolvimento. Reflita sobre suas respostas e busque fortalecer sua inteligência emocional.";
+    } else {
+      texto = "Atenção! Trabalhar a percepção e gestão das emoções pode trazer grandes benefícios para sua vida pessoal e profissional.";
+    }
+
+    document.getElementById("interpretacao").innerHTML = `
+      <p><strong>Pontuação total:</strong> ${pontuacao} / 18</p>
+      <p>${texto}</p>
+    `;
+
+    function lançarConfetti() {
+      const duration = 5 * 1000;
+      const end = Date.now() + duration;
+      (function frame() {
+        confetti({
+          particleCount: 5,
+          angle: 60,
+          spread: 50,
+          origin: { x: 0 },
+          colors: ['#ff6347', '#ffeb3b', '#2d89ef']
+        });
+        confetti({
+          particleCount: 5,
+          angle: 120,
+          spread: 50,
+          origin: { x: 1 },
+          colors: ['#ff6347', '#ffeb3b', '#2d89ef']
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      })();
+    }
+
+    lançarConfetti();
+  </script>
+</body>
+</html>
